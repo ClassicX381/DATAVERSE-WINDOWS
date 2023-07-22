@@ -61,3 +61,4 @@ $output2 = Invoke-Expression "cmd /c $pass2Path"
 # Exibe a saída no terminal do PowerShell
 Write-Host "Senha AnyDesk Alterada! Senha? @ClassicX"
 Write-Host $output2
+exit

